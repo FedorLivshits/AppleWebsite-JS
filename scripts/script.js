@@ -86,12 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.querySelector('.modal');
 
         const closeModal = () => {
-            modal.classList.remove('open');
+            modal.classList.remove('open', 'fade');
             document.body.style.overflow = '';
         }
 
         const showModal = () => {
-            modal.classList.add('open');
+            modal.classList.add('open', 'fade');
             document.body.style.overflow = 'hidden';
         }
 
