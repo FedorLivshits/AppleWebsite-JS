@@ -80,6 +80,35 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+    //Modal
+    const modal = () => {
+        const cardDetailsButtonBuy = document.querySelector('.card-details__button_buy');
+        const modal = document.querySelector('.modal');
+
+        const closeModal = () => {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        const showModal = () => {
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        cardDetailsButtonBuy.addEventListener('click', () => {
+            showModal();
+        });
+
+        modal.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.classList.contains('modal__close') || target.classList.contains('modal')) {
+                closeModal();
+            }
+        });
+
+    }
+
     tabs();
     accordion();
+    modal();
 })
