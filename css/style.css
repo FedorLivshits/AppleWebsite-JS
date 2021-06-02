@@ -296,6 +296,7 @@ h1, h2, h3, p, ul {
 .card-detail__change.active {
     color: #FE3B3B;
     border-bottom: 1px solid #FE3B3B;
+    transition: 0.3s all;
 }
 
 .card-details__description {
