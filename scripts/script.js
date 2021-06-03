@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch('cross-sell-dbase/dbase.json')
                 .then(response => response.json())
                 .then(data => {
-                    data.forEach(item => {
+                    let newData = data.sort(function(){
+                        return Math.random() - 0.5;
+                    });
+                    data.slice(0,4).forEach(item => {
                         makeCrossSellListElement(item);
                     })
                 })
