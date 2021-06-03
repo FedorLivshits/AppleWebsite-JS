@@ -27,7 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const deactivate = () => {
-            cardDetailChange.forEach(btn => btn.classList.remove('active'));
+            cardDetailChange.forEach(btn => {
+                btn.classList.remove('active');
+            });
         };
 
         cardDetailChange.forEach((btn, i) => {
@@ -62,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dropdown.style.height = '0';
         }
 
-        const closeAllDrops = (btn, dropdown) => {
+        const closeAllDrops = (btn) => {
             characteristicsItem.forEach(item => {
                 if (item.children[0] !== btn) {
                     close(item.children[0], item.children[1]);
@@ -83,25 +85,39 @@ document.addEventListener('DOMContentLoaded', () => {
     //Modal
     const modal = () => {
         const cardDetailsButtonBuy = document.querySelector('.card-details__button_buy');
+        const cardDetailsButtonDelivery = document.querySelector('.card-details__button_delivery');
+        const cardDetailsTitle = document.querySelector('.card-details__title');
         const modal = document.querySelector('.modal');
+        const modalTitle = document.querySelector('.modal__title');
+        const modalSubtitle = document.querySelector('.modal__subtitle')
 
         const closeModal = () => {
             modal.classList.remove('open', 'fade');
             document.body.style.overflow = '';
         }
 
-        const showModal = () => {
+        const showModal = (btn) => {
             modal.classList.add('open', 'fade');
+            modalTitle.textContent = cardDetailsTitle.textContent;
+            if(btn === cardDetailsButtonBuy){
+                modalSubtitle.textContent = 'Оплата';
+            }
+            if(btn === cardDetailsButtonDelivery){
+                modalSubtitle.textContent = 'Доставка и оплата';
+            }
             document.body.style.overflow = 'hidden';
         }
 
-        cardDetailsButtonBuy.addEventListener('click', () => {
-            showModal();
-        });
+        [cardDetailsButtonBuy, cardDetailsButtonDelivery].forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                console.log(e.target)
+                showModal(e.target);
+            });
+        })
 
         modal.addEventListener('click', (e) => {
             const target = e.target;
-            if (target.classList.contains('modal__close') || target.classList.contains('modal')) {
+            if (target.classList.contains('modal__close') || target === modal) {
                 closeModal();
             }
         });
