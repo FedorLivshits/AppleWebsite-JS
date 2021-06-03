@@ -1,6 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
+    //Fetch request
+    const renderCrossSellList = () => {
+        const crossSellList = document.querySelector('.cross-sell__list');
+
+        const getData = () => {
+            fetch('cross-sell-dbase/dbase.json')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        makeCrossSellListElement(item);
+                    })
+                })
+                .catch(error => alert('Ошибка: ' + error.message));
+        }
+
+        const makeCrossSellListElement = (item) => {
+            crossSellList.innerHTML += `
+            <li>
+                 <article class="cross-sell__item">
+                    <img class="cross-sell__image" src=${item.photo} alt=${item.name}>
+                    <h3 class="cross-sell__title">${item.name}</h3>
+                    <p class="cross-sell__price">${item.price}₽</p>
+                    <div class="button button_buy cross-sell__button">Купить</div>
+                 </article>
+            </li>
+            `
+        }
+        getData();
+    }
+
     // TABS
     const tabs = () => {
         const cardDetailChange = document.querySelectorAll('.card-detail__change');
@@ -99,10 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const showModal = (btn) => {
             modal.classList.add('open', 'fade');
             modalTitle.textContent = cardDetailsTitle.textContent;
-            if(btn === cardDetailsButtonBuy){
+            if (btn === cardDetailsButtonBuy) {
                 modalSubtitle.textContent = 'Оплата';
             }
-            if(btn === cardDetailsButtonDelivery){
+            if (btn === cardDetailsButtonDelivery) {
                 modalSubtitle.textContent = 'Доставка и оплата';
             }
             document.body.style.overflow = 'hidden';
@@ -127,4 +157,5 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs();
     accordion();
     modal();
+    renderCrossSellList();
 })
