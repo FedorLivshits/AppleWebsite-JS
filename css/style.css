@@ -517,7 +517,14 @@ h1, h2, h3, p, ul {
     line-height: 32px;
 
 }
-
+.show-more__btn{
+    display: block;
+    margin: 0 auto;
+}
+.hide-more__btn{
+    display: none;
+    margin: 0 auto;
+}
 @media (max-width: 968px) {
     .cross-sell__list {
         max-width: 560px;

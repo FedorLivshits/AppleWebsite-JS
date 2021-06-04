@@ -4,33 +4,59 @@ document.addEventListener('DOMContentLoaded', () => {
     //Fetch request
     const renderCrossSellList = () => {
         const crossSellList = document.querySelector('.cross-sell__list');
+        const showMoreBtn = document.querySelector('#show-more');
+        const hideMoreBtn = document.querySelector('#hide-more');
+
+        let newData = []
 
         const getData = () => {
             fetch('cross-sell-dbase/dbase.json')
                 .then(response => response.json())
                 .then(data => {
-                    let newData = data.sort(function(){
+                    data.sort(function () {
                         return Math.random() - 0.5;
-                    });
-                    data.slice(0,4).forEach(item => {
+                    })
+                    newData = [...data]
+                    console.log(newData)
+                    data.splice(0, 4).forEach(item => {
                         makeCrossSellListElement(item);
                     })
                 })
                 .catch(error => alert('Ошибка: ' + error.message));
         }
 
-        const makeCrossSellListElement = (item) => {
+        const makeCrossSellListElement = ({name, photo, price}) => {
             crossSellList.innerHTML += `
             <li>
                  <article class="cross-sell__item">
-                    <img class="cross-sell__image" src=${item.photo} alt=${item.name}>
-                    <h3 class="cross-sell__title">${item.name}</h3>
-                    <p class="cross-sell__price">${item.price}₽</p>
+                    <img class="cross-sell__image" src=${photo} alt=${name}>
+                    <h3 class="cross-sell__title">${name}</h3>
+                    <p class="cross-sell__price">${price}₽</p>
                     <div class="button button_buy cross-sell__button">Купить</div>
                  </article>
             </li>
             `
         }
+        const hideSellList = () => {
+            hideMoreBtn.style.display = 'block';
+            hideMoreBtn.addEventListener('click', () => {
+                crossSellList.innerHTML = '';
+                newData.slice(0, 4).forEach(item => {
+                    makeCrossSellListElement(item);
+                })
+                showMoreBtn.style.display = 'block';
+                hideMoreBtn.style.display = 'none';
+            })
+        }
+
+        showMoreBtn.addEventListener('click', () => {
+            newData.slice(4).forEach(item => {
+                makeCrossSellListElement(item);
+            })
+            showMoreBtn.style.display = 'none';
+            hideSellList()
+        })
+
         getData();
     }
 
